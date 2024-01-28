@@ -31,7 +31,7 @@ public class Validator {
     }
 
     private static boolean isDivideByThousand(String str) {
-        Integer temp = Integer.getInteger(str);
+        Integer temp = Integer.parseInt(str);
         if(temp % 1000 != 0) return false;
         return true;
     }
@@ -42,7 +42,7 @@ public class Validator {
     }
 
     private static boolean isOutOfRange(String str) {
-        Integer temp = Integer.getInteger(str);
+        Integer temp = Integer.parseInt(str);
         return (temp > 45 || temp < 1);
     }
 }
