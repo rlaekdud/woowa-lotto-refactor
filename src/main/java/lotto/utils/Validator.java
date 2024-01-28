@@ -26,6 +26,11 @@ public class Validator {
 
     }
 
+    public static void isValidBonusNum(String bonusNumStr) {
+        if(!isNumericStr(bonusNumStr)) throw new IllegalArgumentException(ErrorMessage.NOT_NUM_INPUT.getMessage());
+        if(!isOutOfRange(bonusNumStr)) throw new IllegalArgumentException(ErrorMessage.NUM_OUT_OF_RANGE.getMessage());
+    }
+
     private static boolean isNumericStr(String str) {
         return str.matches("\\d+");
     }
