@@ -8,46 +8,41 @@ import java.util.Set;
 
 public class Validator {
     public static void isValidPrice(String priceStr) {
-
-        if(!isNumericStr(priceStr)) throw new IllegalArgumentException(ErrorMessage.NOT_NUM_INPUT.getMessage());
-
-        if(!isDivideByThousand(priceStr)) throw new IllegalArgumentException(ErrorMessage.CANNOT_DIVIDE_BY_THOUSAND.getMessage());
-
+        isNumericStr(priceStr);
+        isDivideByThousand(priceStr);
     }
 
     public static void isValidWinningNum(String allWinningNumStr) {
         List<String> winningNumberStrs = List.of(allWinningNumStr.split(","));
         if(winningNumberStrs.size() != 6) throw new IllegalArgumentException(ErrorMessage.INVALID_NUM_COUNT.getMessage());
         for(String winningNumberStr : winningNumberStrs) {
-            if(!isNumericStr(winningNumberStr)) throw new IllegalArgumentException(ErrorMessage.NOT_NUM_INPUT.getMessage());
-            if(isOutOfRange(winningNumberStr)) throw new IllegalArgumentException(ErrorMessage.NUM_OUT_OF_RANGE.getMessage());
+            isNumericStr(winningNumberStr);
+            isOutOfRange(winningNumberStr);
         }
-        if(isDuplicated(winningNumberStrs)) throw new IllegalArgumentException(ErrorMessage.DUPLICATED_NUM.getMessage());
-
+        isDuplicated(winningNumberStrs);
     }
 
     public static void isValidBonusNum(String bonusNumStr) {
-        if(!isNumericStr(bonusNumStr)) throw new IllegalArgumentException(ErrorMessage.NOT_NUM_INPUT.getMessage());
-        if(!isOutOfRange(bonusNumStr)) throw new IllegalArgumentException(ErrorMessage.NUM_OUT_OF_RANGE.getMessage());
+        isNumericStr(bonusNumStr);
+        isOutOfRange(bonusNumStr);
     }
 
-    private static boolean isNumericStr(String str) {
-        return str.matches("\\d+");
+    private static void isNumericStr(String str) {
+        if(!str.matches("\\d+")) throw new IllegalArgumentException(ErrorMessage.NOT_NUM_INPUT.getMessage());
     }
 
-    private static boolean isDivideByThousand(String str) {
+    private static void isDivideByThousand(String str) {
         Integer temp = Integer.parseInt(str);
-        if(temp % 1000 != 0) return false;
-        return true;
+        if(temp % 1000 != 0) throw new IllegalArgumentException(ErrorMessage.CANNOT_DIVIDE_BY_THOUSAND.getMessage());
     }
 
-    private static boolean isDuplicated(List<String> strList) {
+    private static void isDuplicated(List<String> strList) {
         Set<String> set = new HashSet<>(strList);
-        return set.size() < strList.size();
+        if(set.size() < strList.size()) throw new IllegalArgumentException(ErrorMessage.DUPLICATED_NUM.getMessage());
     }
 
-    private static boolean isOutOfRange(String str) {
+    private static void isOutOfRange(String str) {
         Integer temp = Integer.parseInt(str);
-        return (temp > 45 || temp < 1);
+        if(!(temp > 45 || temp < 1)) throw new IllegalArgumentException(ErrorMessage.NUM_OUT_OF_RANGE.getMessage());
     }
 }
