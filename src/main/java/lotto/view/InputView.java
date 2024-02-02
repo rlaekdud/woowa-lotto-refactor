@@ -33,11 +33,11 @@ public class InputView {
         return toIntegerList(inputString);
     }
 
-    public static Integer getBonusNum() {
+    public static Integer getBonusNum(List<Integer> winningNums) {
         System.out.println(getBonusNumStr);
         String inputString = readLine();
 
-        Validator.isValidBonusNum(inputString);
+        Validator.isValidBonusNum(inputString, winningNums);
 
         return toInteger(inputString);
     }

@@ -31,9 +31,10 @@ public class Validator {
         isDuplicated(winningNumberStrs);
     }
 
-    public static void isValidBonusNum(String bonusNumStr) {
+    public static void isValidBonusNum(String bonusNumStr, List<Integer> winningNums) {
         isNumericStr(bonusNumStr);
         isOutOfRange(Integer.parseInt(bonusNumStr));
+        if(winningNums.contains(Integer.parseInt(bonusNumStr))) throw new IllegalArgumentException(ErrorMessage.DUPLICATED_NUM.getMessage());
     }
 
     private static void isNumericStr(String str) {

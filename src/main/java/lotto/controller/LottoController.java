@@ -16,7 +16,9 @@ public class LottoController {
 
         OutputView.printLottoNumbers(lottos);
 
-        LottoService lottoService = new LottoService(lottos, InputView.getWinningNum(), InputView.getBonusNum());
+        List<Integer> winningNums = InputView.getWinningNum();
+        Integer bonusNum = InputView.getBonusNum(winningNums);
+        LottoService lottoService = new LottoService(lottos, winningNums, bonusNum);
         OutputView.printStatistics(lottoService.getRankStatistics());
         OutputView.printRateOfReturn(lottoService.rateOfReturn(price));
     }
