@@ -8,8 +8,8 @@ import java.util.Map;
 
 public class OutputView {
 
-    private static final String resultTitleStr = "당첨 통계\n---";
-    private static final String purchaseCountStr = "#개를 구매했습니다.";
+    private static final String resultTitleStr = "\n당첨 통계\n---";
+    private static final String purchaseCountStr = "\n#개를 구매했습니다.";
     private static final String rateOfReturnStr = "총 수익률은 #%입니다.";
 
     public static void printLottoNumbers(List<Lotto> lottos) {
@@ -24,12 +24,15 @@ public class OutputView {
     public static void printStatistics(Map<Rank, Integer> resultList) {
         System.out.println(resultTitleStr);
         for(Rank rank : Rank.getAllRanks()) {
-            System.out.println(rank.getResultMessage() + " - " + resultList.get(rank) + "개");
+            Integer temp = resultList.get(rank);
+            if(temp == null) temp = 0;
+            System.out.println(rank.getResultMessage() + " - " + temp + "개");
         }
     }
 
     public static void printRateOfReturn(Double returnRate) {
-        String formattedReturnRate = String.format("%.2f", returnRate);
+        Double halfUpRate = Math.round(returnRate * 10) / 10.0;
+        String formattedReturnRate = halfUpRate.toString();
         System.out.println(rateOfReturnStr.replace("#", formattedReturnRate));
     }
 }

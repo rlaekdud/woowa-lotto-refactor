@@ -11,8 +11,8 @@ import static camp.nextstep.edu.missionutils.Console.readLine;
 public class InputView {
 
     private static final String getPriceStr = "구입금액을 입력해 주세요.";
-    private static final String getWinningNumStr = "당첨 번호를 입력해 주세요.";
-    private static final String getBonusNumStr = "보너스 번호를 입력해 주세요.";
+    private static final String getWinningNumStr = "\n당첨 번호를 입력해 주세요.";
+    private static final String getBonusNumStr = "\n보너스 번호를 입력해 주세요.";
 
     public static Integer getPrice() {
 
@@ -43,7 +43,7 @@ public class InputView {
     }
 
     private static Integer toInteger(String numStr) {
-        return Integer.getInteger(numStr);
+        return Integer.parseInt(numStr);
     }
 
     private static List<Integer> toIntegerList(String numStr) {

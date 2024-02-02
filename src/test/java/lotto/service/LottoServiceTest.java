@@ -21,9 +21,6 @@ class LottoServiceTest {
             testLottoList.add(lotto);
         }
         LottoService lottoService = new LottoService(testLottoList, Arrays.asList(1, 2, 3, 4, 5, 6), 7);
-
-        Map<Rank, Integer> rankResult = lottoService.calculateRank();
-        System.out.println("rankResult = " + rankResult);
     }
 
     @Test

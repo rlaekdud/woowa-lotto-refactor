@@ -55,6 +55,6 @@ public class Validator {
     }
 
     private static void isOutOfRange(Integer num) {
-        if(!(num > 45 || num < 1)) throw new IllegalArgumentException(ErrorMessage.NUM_OUT_OF_RANGE.getMessage());
+        if(num > 45 || num < 1) throw new IllegalArgumentException(ErrorMessage.NUM_OUT_OF_RANGE.getMessage());
     }
 }
