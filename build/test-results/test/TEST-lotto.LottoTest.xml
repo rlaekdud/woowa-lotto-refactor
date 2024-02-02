@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="lotto.LottoTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-02-02T02:04:23" hostname="MacBook-Pro.local" time="0.047">
+  <properties/>
+  <testcase name="로또 번호에 중복된 숫자가 있으면 예외가 발생한다." classname="lotto.LottoTest" time="0.047"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

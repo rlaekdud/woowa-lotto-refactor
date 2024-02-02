@@ -4,50 +4,58 @@ import lotto.exceptions.ErrorMessage;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 public class Validator {
     public static void isValidPrice(String priceStr) {
+        isNumericStr(priceStr);
+        isDivideByThousand(priceStr);
+    }
 
-        if(!isNumericStr(priceStr)) throw new IllegalArgumentException(ErrorMessage.NOT_NUM_INPUT.getMessage());
-
-        if(!isDivideByThousand(priceStr)) throw new IllegalArgumentException(ErrorMessage.CANNOT_DIVIDE_BY_THOUSAND.getMessage());
-
+    public static void isValidLottoNum(List<Integer> lottoNums) {
+        isValidSize(lottoNums);
+        lottoNums.forEach(Validator::isOutOfRange);
+        isDuplicated(lottoNums);
     }
 
     public static void isValidWinningNum(String allWinningNumStr) {
         List<String> winningNumberStrs = List.of(allWinningNumStr.split(","));
-        if(winningNumberStrs.size() != 6) throw new IllegalArgumentException(ErrorMessage.INVALID_NUM_COUNT.getMessage());
-        for(String winningNumberStr : winningNumberStrs) {
-            if(!isNumericStr(winningNumberStr)) throw new IllegalArgumentException(ErrorMessage.NOT_NUM_INPUT.getMessage());
-            if(isOutOfRange(winningNumberStr)) throw new IllegalArgumentException(ErrorMessage.NUM_OUT_OF_RANGE.getMessage());
-        }
-        if(isDuplicated(winningNumberStrs)) throw new IllegalArgumentException(ErrorMessage.DUPLICATED_NUM.getMessage());
+        isValidSize(winningNumberStrs);
 
+        winningNumberStrs.stream()
+                .peek(Validator::isNumericStr)
+                .map(Integer::parseInt)
+                .forEach(Validator::isOutOfRange);
+
+        isDuplicated(winningNumberStrs);
     }
 
-    public static void isValidBonusNum(String bonusNumStr) {
-        if(!isNumericStr(bonusNumStr)) throw new IllegalArgumentException(ErrorMessage.NOT_NUM_INPUT.getMessage());
-        if(!isOutOfRange(bonusNumStr)) throw new IllegalArgumentException(ErrorMessage.NUM_OUT_OF_RANGE.getMessage());
+    public static void isValidBonusNum(String bonusNumStr, List<Integer> winningNums) {
+        isNumericStr(bonusNumStr);
+        isOutOfRange(Integer.parseInt(bonusNumStr));
+        if(winningNums.contains(Integer.parseInt(bonusNumStr))) throw new IllegalArgumentException(ErrorMessage.DUPLICATED_NUM.getMessage());
     }
 
-    private static boolean isNumericStr(String str) {
-        return str.matches("\\d+");
+    private static void isNumericStr(String str) {
+        if(!str.matches("\\d+")) throw new IllegalArgumentException(ErrorMessage.NOT_NUM_INPUT.getMessage());
     }
 
-    private static boolean isDivideByThousand(String str) {
+    private static void isDivideByThousand(String str) {
         Integer temp = Integer.parseInt(str);
-        if(temp % 1000 != 0) return false;
-        return true;
+        if(temp % 1000 != 0) throw new IllegalArgumentException(ErrorMessage.CANNOT_DIVIDE_BY_THOUSAND.getMessage());
     }
 
-    private static boolean isDuplicated(List<String> strList) {
-        Set<String> set = new HashSet<>(strList);
-        return set.size() < strList.size();
+    private static <T> void isValidSize(List<T> nums) {
+        if(nums.size() != 6) throw new IllegalArgumentException(ErrorMessage.INVALID_NUM_COUNT.getMessage());
     }
 
-    private static boolean isOutOfRange(String str) {
-        Integer temp = Integer.parseInt(str);
-        return (temp > 45 || temp < 1);
+    private static <T> void isDuplicated(List<T> numList) {
+        Set<T> set = new HashSet<>(numList);
+        if(set.size() < numList.size()) throw new IllegalArgumentException(ErrorMessage.DUPLICATED_NUM.getMessage());
+    }
+
+    private static void isOutOfRange(Integer num) {
+        if(num > 45 || num < 1) throw new IllegalArgumentException(ErrorMessage.NUM_OUT_OF_RANGE.getMessage());
     }
 }
